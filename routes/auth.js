@@ -26,7 +26,7 @@ router.post('/register', async (req,res) => {
     });
     const savedUser = await user.save();
 
-    res.redirect('http://colecloud.tech/success.html');
+    res.redirect('/success.html');
 });
 
 
