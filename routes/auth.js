@@ -47,7 +47,7 @@ router.post('/login', async (req,res) => {
         httpOnly: true
     });
 
-    return res.redirect("http://colecloud.tech/home/home");
+    return res.redirect("/home/home");
 });
 
 router.post('/email', async (req,res) =>{
