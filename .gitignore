@@ -1,0 +1,5 @@
+*.env
+compose.yaml
+./node_modules/
+./tform/
+package-lock.json

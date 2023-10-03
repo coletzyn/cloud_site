@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle Background</title>
+    <style>
+        body{
+            background-color: blueviolet;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("particle-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 100;
+
+        function createParticle() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 5 + 2,
+                color: `rgb(255,255,255)`,
+                velocity: {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2
+                }
+            };
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particleCount; i++) {
+                let particle = particles[i];
+
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.fill();
+
+                particle.x += particle.velocity.x;
+                particle.y += particle.velocity.y;
+
+                if (particle.x > canvas.width || particle.x < 0) {
+                    particle.velocity.x *= -1;
+                }
+
+                if (particle.y > canvas.height || particle.y < 0) {
+                    particle.velocity.y *= -1;
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(createParticle());
+        }
+
+        draw();
+    </script>
+</body>
+</html>

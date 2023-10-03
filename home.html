@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Cole Cloud</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color:#3498db ;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #2980b9;
+            overflow: hidden;
+        }
+
+        /* Left-aligned item */
+        .left-item {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Right-aligned items */
+        .right-items {
+            float: right;
+        }
+
+        .right-items a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .right-items a:hover {
+            background-color: #1f6492;
+        }
+
+        .container {
+            text-align: center;
+            padding: 100px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a class="left-item" href="#">Cole Cloud &#9729;</a>
+        <div class="right-items">
+            <a href="#">Home</a>
+            <a href="http://localhost/home/resume">Resume</a>
+            <a href="http://localhost/home/contact">Contact Me</a>
+        </div>
+    </div>
+    <canvas id="particle-canvas"></canvas>
+    <div class="container">
+        <h1 id="typing-text"></h1>
+
+        <div class="section">
+            <h2>Cole : An Aspiring Cybersecurity Researcher</h2>
+            <p>Since middle school I've been a hacker. I started using CheatEngine on Roblox games which quickly graduated to pentesting Windows 7 boxes. My security shenanigans were just a hobby for a long time; it wasn't until after college that I learned that cybersecurity existed outside of the realm of the NSA.</p>
+            <p>I brushed cybersecurity aside, thinking that without a degree I would have no shot at becoming a 'professional hacker'. </p>
+            <p>After spending a year in marketing analytics, I was laid off by my company. I spent my time thinking about what I really wanted to do. It took a while, but, I finally realized I was meant to work in IT.</p>
+            <p>In the summer of 2023 I got a job at Charter Communications as a Chat Repair Agent. I learned basic troubleshooting of internet services, how ISPs work from a bird's eye view and began studying for my CCNA.</p>
+            <p>In September of 2023 I decided to move down to Texas and I got my current job as an IT Assistant where I create networks, manage user access control and install and configure next generation firewalls. Currently I'm pushing for the creation of a cybersecurity program for one of my company's clients.</p>
+            <p>So, feel free to follow along for what comes next...</p>
+        </div>
+
+        <div class="section">
+            <h2>My Latest Project</h2>
+            <p>My most recent project is actually this website. I realized the best way to showcase my skills was by creating a platform where I can host my personal projects.</p>
+            <p>This website was hand coded from the ground up with HTML, CSS and Javascript with NodeJS for the backend. It was deployed to a Microsoft Azure Linux VM with Terraform.</p>
+            <p>Along the way I learned the ins and outs of cloud deployment and refreshed my javascript skills. All of the code for this site can be found on my github.</p>
+            <a href="https://github.com/coletzyn/cloud_site">GitHub</a>
+        </div>
+
+        <div class="section">
+            <h2>My Next Adventure</h2>
+            <p>An area of cybersecurity that I've always found interesting was malware development. I am especially interested in malware development because it merges two things that I find very interesting: software development and cybersecurity. To state the obvious, this project is purely for educational purposes and will be deployed on a virtual network. I do not endorse the use of malware for anything other than education.</p>
+            <p>No, I will not give you the code when I'm done.</p>
+        </div>
+    </div>
+    <script>
+        // Text to be typed
+        const textToType = "Welcome to Cole Cloud.";
+
+        // Get the text element
+        const typingTextElement = document.getElementById("typing-text");
+
+        // Function to simulate typing animation
+        function typeText(index) {
+            if (index < textToType.length) {
+                typingTextElement.textContent += textToType.charAt(index);
+                index++;
+                setTimeout(function () {
+                    typeText(index);
+                }, 100); // Adjust typing speed (milliseconds)
+            }
+        }
+
+        // Start the typing animation
+        typeText(0);
+    </script>
+    <script>
+        const canvas = document.getElementById("particle-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 100;
+
+        function createParticle() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 5 + 2,
+                color: `rgb(255,255,255)`,
+                velocity: {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2
+                }
+            };
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particleCount; i++) {
+                let particle = particles[i];
+
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.fill();
+
+                particle.x += particle.velocity.x;
+                particle.y += particle.velocity.y;
+
+                if (particle.x > canvas.width || particle.x < 0) {
+                    particle.velocity.x *= -1;
+                }
+
+                if (particle.y > canvas.height || particle.y < 0) {
+                    particle.velocity.y *= -1;
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(createParticle());
+        }
+
+        draw();
+    </script>
+
+</body>
+</html>
