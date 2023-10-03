@@ -26,7 +26,7 @@ router.post('/register', async (req,res) => {
     });
     const savedUser = await user.save();
 
-    res.redirect('http://localhost/success.html');
+    res.redirect('http://colecloud.tech/success.html');
 });
 
 
@@ -47,7 +47,7 @@ router.post('/login', async (req,res) => {
         httpOnly: true
     });
 
-    return res.redirect("/home/home");
+    return res.redirect("http://colecloud.tech/home/home");
 });
 
 router.post('/email', async (req,res) =>{
